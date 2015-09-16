@@ -1,12 +1,22 @@
 #include "lennardjones.hpp"
 
 void LennardJones::set_forces(){
+    /// Iterate over all pairs of atoms, see if they are in range, and if so,
+    /// update their force to reflect that.
     for(uint i=0; i<atoms.N; i++){
         for(uint j=0; j<i; j++){
             Vec dist = atoms.dist(i, j);
             flt dist_squared = dist.squaredNorm() / (sigma*sigma);
             
             if(dist_squared > (cut*cut)) continue;
+            
+            /// This code looks a little strange because it is avoiding
+            /// calculating a square root.
+            /// We can either write the force as
+            ///     f_ij = 4 epsilon * (12 sigma^12 / r^13 - 6 sigma^6 / r^7) * rhat
+            /// or equivalently,
+            ///     f_ij = 4 epsilon * (12 sigma^12 / r^14 - 6 sigma^6 / r^8) * r_vector
+            /// We use the latter, because its faster.
             
             // sigma^6 / r^6
             flt dist_neg6 = 1.0 / (dist_squared*dist_squared*dist_squared);

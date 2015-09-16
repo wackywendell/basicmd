@@ -1,5 +1,7 @@
 #include "atoms.hpp"
 
+/// The Lennard-Jones potential,
+/// U = 4 epsilon (sigma^12 / r^12 - sigma^6 / r^6)
 class LennardJones {
 public:
     Atoms& atoms;
