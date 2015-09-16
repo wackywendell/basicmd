@@ -1,3 +1,8 @@
+# Note that this project needs the Eigen library.
+# If you have it installed, and it still can't be found,
+# you may need to add it to your CPLUS_INCLUDE_PATH:
+# CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:/path/to/include/eigen
+
 CCOPTS=-I src -Wall -O2 -Wconversion -Wno-sign-conversion -std=c++14
 
 all: sim
