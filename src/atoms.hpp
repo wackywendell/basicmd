@@ -23,8 +23,8 @@ typedef unsigned int uint;
 typedef Eigen::Matrix<flt, NDIM, 1> Vec;
 typedef Eigen::Matrix<flt, Eigen::Dynamic, NDIM> VecArray;
 
-double random_gaussian(double odummy);
-
+/// For taking the "remainder" function on a vector; needed for periodic 
+/// boundary conditions.
 Vec vec_remainder(Vec r, Vec l);
 Vec vec_remainder(Vec r, flt l);
 
@@ -43,8 +43,11 @@ public:
     void randomize_velocities(flt temperature);
     void scale_velocities(flt T, bool subtract_com);
     
+    /// "nearest" distance between particles i and j, given periodic boundary
+    /// conditions.
     Vec dist(uint i, uint j);
     
     flt kinetic_energy();
+    /// We calculate temperature via the equipartition theorem
     flt temperature(bool subtract_com);
 };
