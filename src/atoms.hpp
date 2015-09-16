@@ -25,20 +25,26 @@ typedef Eigen::Matrix<flt, Eigen::Dynamic, NDIM> VecArray;
 
 double random_gaussian(double odummy);
 
+Vec vec_remainder(Vec r, Vec l);
+Vec vec_remainder(Vec r, flt l);
 
 class Atoms {
-    public:
-        uint N;
-        VecArray x;
-        VecArray v;
-        VecArray f;
+public:
+    uint N;
+    flt L;
+    VecArray x;
+    VecArray v;
+    VecArray f;
+
+public:
+    Atoms(uint N, flt box_length);
     
-    public:
-        Atoms(uint N);
-        
-        void randomize_locations(flt box_length);
-        void randomize_velocities(flt temperature);
-        
-        // flt temperature();
-        // flt kinetic_energy();
+    void randomize_locations();
+    void randomize_velocities(flt temperature);
+    void scale_velocities(flt T, bool subtract_com);
+    
+    Vec dist(uint i, uint j);
+    
+    flt kinetic_energy();
+    flt temperature(bool subtract_com);
 };
