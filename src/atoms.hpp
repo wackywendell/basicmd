@@ -22,6 +22,7 @@ typedef unsigned int uint;
 
 typedef Eigen::Matrix<flt, NDIM, 1> Vec;
 typedef Eigen::Matrix<flt, Eigen::Dynamic, NDIM> VecArray;
+typedef Eigen::Matrix<flt, Eigen::Dynamic, 1> VecD;
 
 /// For taking the "remainder" function on a vector; needed for periodic 
 /// boundary conditions.
@@ -35,6 +36,7 @@ public:
     VecArray x;
     VecArray v;
     VecArray f;
+    VecD m;
 
 public:
     Atoms(uint N, flt box_length);

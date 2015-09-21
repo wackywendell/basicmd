@@ -1,12 +1,14 @@
 #include "verlet.hpp"
 
 void VelocityVerlet::timestep() {
+    VecArray a = (atoms.f.array().colwise() / atoms.m.array()).matrix();
     atoms.x += atoms.v * dt;
-    atoms.x += atoms.f * (dt*dt/2);
+    atoms.x += a * (dt*dt/2);
     
-    atoms.v += atoms.f * (dt/2);
+    atoms.v += a * (dt/2);
     
     atoms.f.setZero();
     forces.set_forces();
-    atoms.v += atoms.f * (dt/2);
+    a = (atoms.f.array().colwise() / atoms.m.array()).matrix();
+    atoms.v += a * (dt/2);
 }

@@ -3,6 +3,9 @@
 int main() {
     /// 8 atoms, box of length 3.0.
     Atoms atoms = Atoms(8, 3.0);
+    for(uint i=atoms.N / 2; i< atoms.N; i++){
+        atoms.m(i) = pow(1.4, 3);
+    }
     /// Put them in random places
     atoms.randomize_locations();
     

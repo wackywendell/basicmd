@@ -19,7 +19,7 @@ Vec vec_remainder(Vec r, flt l){
     return r;
 }
 
-Atoms::Atoms(uint N, flt L) : N(N), L(L), x(VecArray::Zero(N, NDIM)), v(VecArray::Zero(N, NDIM)), f(VecArray::Zero(N, NDIM)) {}
+Atoms::Atoms(uint N, flt L) : N(N), L(L), x(VecArray::Zero(N, NDIM)), v(VecArray::Zero(N, NDIM)), f(VecArray::Zero(N, NDIM)), m(VecD::Ones(N)) {}
 
 Vec Atoms::dist(uint i, uint j) {
     Vec dist = x.row(i) - x.row(j);
@@ -45,7 +45,8 @@ void Atoms::scale_velocities(flt T, bool subtract_com){
 }
 
 flt Atoms::kinetic_energy(){
-    return v.rowwise().squaredNorm().sum() / 2.0;
+    flt mass_v_sum = v.rowwise().squaredNorm().transpose() * m;
+    return mass_v_sum / 2.0;
 }
 
 flt Atoms::temperature(bool subtract_com){
@@ -53,5 +54,5 @@ flt Atoms::temperature(bool subtract_com){
     if(subtract_com && N > 0) degrees_of_freedom = (N - 1) * NDIM;
     else degrees_of_freedom = N * NDIM;
     
-    return v.rowwise().squaredNorm().sum() / degrees_of_freedom;
+    return kinetic_energy() * 2.0 / degrees_of_freedom;
 }
