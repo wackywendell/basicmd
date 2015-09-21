@@ -22,5 +22,5 @@ lib/lennardjones.o: src/atoms.hpp src/lennardjones.hpp src/lennardjones.cpp | li
 lib/verlet.o: src/atoms.hpp src/lennardjones.hpp src/verlet.hpp src/verlet.cpp | lib
 	$(CXX) $(CCOPTS) -c src/verlet.cpp -o lib/verlet.o
 
-sim: lib/verlet.o lib/lennardjones.o lib/atoms.o
+sim: lib/verlet.o lib/lennardjones.o lib/atoms.o src/sim.cpp
 	$(CXX) $(CCOPTS) lib/verlet.o lib/lennardjones.o lib/atoms.o src/sim.cpp -o sim
